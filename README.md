@@ -1,6 +1,7 @@
-# Takanashi-Hoshino API
+# Takanashi Hoshino API
 
-一个基于Node.js和Express的图片API服务，提供按宽高比筛选的随机图片访问功能。
+A API Always Back Takanashi Hoshino's Image.
+一个始终返回小鸟游星野图片的 API
 
 ## 功能介绍
 
