@@ -105,7 +105,7 @@ def main():
                 if not os.path.exists(target_folder_path):
                     os.makedirs(target_folder_path)
                 
-                # 移动文件
+                # 复制文件
                 target_file_path = os.path.join(target_folder_path, file)
                 
                 # 检查目标文件是否已存在
@@ -116,15 +116,10 @@ def main():
                         counter += 1
                     target_file_path = os.path.join(target_folder_path, f"{base_name}_{counter}{ext}")
                 
-                # 更安全的文件移动方式
-                try:
-                    shutil.move(file_path, target_file_path)
-                except PermissionError:
-                    # 如果直接移动失败，尝试先复制再删除
-                    shutil.copy2(file_path, target_file_path)
-                    os.remove(file_path)
+                # 复制文件到目标位置
+                shutil.copy2(file_path, target_file_path)
                 
-                print(f"已移动 '{file}' ({width}x{height}) 到 '{target_folder_name}' 文件夹")
+                print(f"已复制 '{file}' ({width}x{height}) 到 '{target_folder_name}' 文件夹")
                 processed_count += 1
                 
                 # 记录整理后的文件信息
@@ -143,9 +138,43 @@ def main():
     # 将整理后的文件列表写入 imgs.json（在目标文件夹中）
     try:
         json_path = os.path.join(folderto, "imgs.json")
-        with open(json_path, "w", encoding="utf-8") as json_file:
-            json.dump(organized_files, json_file, ensure_ascii=False, indent=2)
-        print(f"已将整理后的文件列表写入 {json_path}")
+        
+        # 如果imgs.json已存在，则读取现有内容并追加
+        if os.path.exists(json_path):
+            try:
+                with open(json_path, "r", encoding="utf-8") as json_file:
+                    existing_data = json.load(json_file)
+                
+                # 合并现有数据和新数据
+                for ratio, images in organized_files.items():
+                    if ratio in existing_data:
+                        # 如果该比例已存在，追加新图片
+                        existing_data[ratio].extend(images)
+                    else:
+                        # 如果是新比例，直接添加
+                        existing_data[ratio] = images
+                
+                # 写入合并后的数据
+                with open(json_path, "w", encoding="utf-8") as json_file:
+                    json.dump(existing_data, json_file, ensure_ascii=False, indent=2)
+                    
+                print(f"已将整理后的文件列表追加到 {json_path}")
+            except Exception as e:
+                print(f"读取或合并现有数据时出错: {e}")
+                # 如果合并失败，则备份原文件并创建新的
+                backup_path = json_path + ".backup"
+                shutil.copy2(json_path, backup_path)
+                print(f"已备份原文件到 {backup_path}")
+                
+                with open(json_path, "w", encoding="utf-8") as json_file:
+                    json.dump(organized_files, json_file, ensure_ascii=False, indent=2)
+                print(f"已创建新的 imgs.json 文件（原文件已备份）")
+        else:
+            # 如果文件不存在，直接创建
+            with open(json_path, "w", encoding="utf-8") as json_file:
+                json.dump(organized_files, json_file, ensure_ascii=False, indent=2)
+            print(f"已将整理后的文件列表写入 {json_path}")
+            
     except Exception as e:
         print(f"写入 imgs.json 时出错: {e}")
     
