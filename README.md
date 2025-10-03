@@ -1,7 +1,9 @@
 # Takanashi Hoshino API
 
-A API Always Back Takanashi Hoshino's Image.
-一个始终返回小鸟游星野图片的 API
+A API Always Back Takanashi Hoshino's Image.  
+一个始终返回小鸟游星野图片的 API  
+
+![仓库大小](https://img.shields.io/github/repo-size/Detritalw/Takanashi-Hoshino-API?style=social&label=%E4%BB%93%E5%BA%93%E5%A4%A7%E5%B0%8F)
 
 ## 功能介绍
 
