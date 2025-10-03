@@ -79,8 +79,17 @@ GET /api/img/Takanashi-Hoshino?ratio={宽高比}
 ```
 
 示例：
-- `http://localhost:20009/api/img/Takanashi-Hoshino?ratio=16_9` - 获取16:9的随机图片
-- `http://localhost:20009/api/img/Takanashi-Hoshino?ratio=3_4` - 获取3:4的随机图片
+- `http://pcfs.eno.ink:20009/api/img/Takanashi-Hoshino?ratio=16_9` - 获取16:9的随机图片
+
+![](http://pcfs.eno.ink:20009/api/img/Takanashi-Hoshino?ratio=16_9)
+
+- `http://pcfs.eno.ink:20009/api/img/Takanashi-Hoshino?ratio=3_4` - 获取3:4的随机图片
+
+![](http://pcfs.eno.ink:20009/api/img/Takanashi-Hoshino?ratio=3_4)
+
+- `http://pcfs.eno.ink:20009/api/img/Takanashi-Hoshino` - 获取任意宽高比的随机图片
+
+![](http://pcfs.eno.ink:20009/api/img/Takanashi-Hoshino)
 
 接口将重定向到实际的图片地址。
 
