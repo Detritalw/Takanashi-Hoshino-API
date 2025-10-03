@@ -110,11 +110,8 @@ def main():
                 
                 # 检查目标文件是否已存在
                 if os.path.exists(target_file_path):
-                    base_name, ext = os.path.splitext(file)
-                    counter = 1
-                    while os.path.exists(os.path.join(target_folder_path, f"{base_name}_{counter}{ext}")):
-                        counter += 1
-                    target_file_path = os.path.join(target_folder_path, f"{base_name}_{counter}{ext}")
+                    print(f"文件 '{file}' 已存在于 '{target_folder_name}' 文件夹中，跳过复制。")
+                    continue
                 
                 # 复制文件到目标位置
                 shutil.copy2(file_path, target_file_path)
