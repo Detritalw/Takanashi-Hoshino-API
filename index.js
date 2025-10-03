@@ -15,9 +15,20 @@ const imageData = JSON.parse(fs.readFileSync(path.join(__dirname, 'imgs.json'), 
 app.get('/api/img/Takanashi-Hoshino', (req, res) => {
   const ratio = req.query.ratio;
   
-  // 如果没有提供ratio参数
+  // 如果没有提供ratio参数，则从所有文件夹中随机选择一张图片
   if (!ratio) {
-    return res.status(400).json({ error: '缺少宽高比参数' });
+    // 将所有图片放入一个数组中
+    const allImages = [];
+    for (const ratioKey in imageData) {
+      allImages.push(...imageData[ratioKey]);
+    }
+    
+    // 随机选择一张图片
+    const randomImage = allImages[Math.floor(Math.random() * allImages.length)];
+    
+    // 重定向到图片路径
+    res.redirect(`/${randomImage.path}`);
+    return;
   }
   
   // 检查是否存在该宽高比的图片
