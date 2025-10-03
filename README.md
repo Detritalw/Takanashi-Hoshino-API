@@ -99,7 +99,3 @@ GET /api/img/Takanashi-Hoshino?ratio={宽高比}
 ```
 
 设置API服务运行的端口号。
-
-## 许可证
-
-MIT
